@@ -1,11 +1,11 @@
 import "dotenv/config"
-import express, { response } from "express";
+import express, { request } from "express";
 import ChampionsRoutes from "./routes/champions.js";
 import mongoose from 'mongoose';
+import { handleUncaughtErrors } from "./Middlewares/error.js";
+import isAuth from "./Middlewares/auth.js";
 
 const app = express();
-
-console.log("env: ", process.env.MONGO_STRING);
 
 const PORT = process.env.PORT || 3001;
 const MONGO_STRING = process.env.MONGO_STRING
@@ -18,8 +18,14 @@ const MONGO_STRING = process.env.MONGO_STRING
   */
 app.use(express.json());
 
-app.use("/Champions", ChampionsRoutes);
+app.use("/Champions", isAuth, ChampionsRoutes);
+app.use("/auth", (request, response) => {
+    try {
+        throw new Error("This is an error");
+    } catch (error) {}
+});
 
+app.use(handleUncaughtErrors);
 // Routes
 app.get("/", (request, response) => {
     response.json({ message: "Hello World"})

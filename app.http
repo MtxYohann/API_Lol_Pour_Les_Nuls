@@ -1,36 +1,36 @@
-GET http://localhost:3001
+GET http://localhost:3000
 
 ###
-GET http://localhost:3001/Champions/1
+GET http://localhost:3000/Champions/6615034b0ba35e906a7945ba
 
 ###
-GET http://localhost:3001/Champions/
+GET http://localhost:3000/Champions/
 
 ###
-POST http://localhost:3001/Champions
+POST http://localhost:3000/Champions
 Content-Type : application/json
 
 {
-    "name": "Fizz",
+    "name": "z",
     "description": "un poisson avec des degats magiques",
-    "sorts_a": "dash",
-    "sorts_z": "buff auto attack",
-    "sorts_e": "dash",
-    "sorts_r": "lance un requin"
+    "sort_a": "fonce en avant et fait des degats magiques",
+    "sort_z": "buff auto attack",
+    "sort_e": "saute et fait des degats magiques",
+    "sort_r": "lance un requin"
 }
 
 ###
-PUT http://localhost:3001/Champions/2
+PUT http://localhost:3000/Champions/661507761434037f7a59f0f3
 Content-Type: application/json
 
 {
     "name": "ashe",
     "description": "elle a un arc de glace et fait des dégats physiques",
-    "sorts_a": "buff auto attack",
-    "sorts_z": "un pigeon qui donne de la vision",
-    "sorts_e": "tire des fleches de glace en cone devant elle",
-    "sorts_r": "tire une grosse fleche de glace qui peut parcourir toute la carte"
+    "sort_a": "buff auto attack",
+    "sort_z": "un pigeon qui donne de la vision",
+    "sort_e": "tire des fleches de glace en cone devant elle",
+    "sort_r": "tire une grosse fleche de glace qui peut parcourir toute la carte"
 }
 
 ###
-DELETE http://localhost:3001/Champions/1
+DELETE http://localhost:3000/Champions/661515f20f533b72292c3d37
