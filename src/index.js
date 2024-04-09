@@ -1,6 +1,7 @@
 import "dotenv/config"
 import express, { request } from "express";
 import ChampionsRoutes from "./routes/champions.js";
+import authRoutes from "./routes/auth.js"
 import mongoose from 'mongoose';
 import { handleUncaughtErrors } from "./Middlewares/error.js";
 import isAuth from "./Middlewares/auth.js";
@@ -19,11 +20,14 @@ const MONGO_STRING = process.env.MONGO_STRING
 app.use(express.json());
 
 app.use("/Champions", isAuth, ChampionsRoutes);
-app.use("/auth", (request, response) => {
+app.use("/auth", authRoutes);
+
+app.use("/error", (request, response) => {
     try {
-        throw new Error("This is an error");
+      //
+      throw new Error("This is an error");
     } catch (error) {}
-});
+  });
 
 app.use(handleUncaughtErrors);
 // Routes

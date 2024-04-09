@@ -21,24 +21,30 @@ export const signup = async (req, res, next) => {
   res.status(201).json(doc);
 };
 
-export const signin = async (req, res, next) => {
-  const { email, password } = req.body;
-  // On cherche l'utilisateur dans la base de donnees
-  const user = await User.findOne({ email: email });
+export const signin = async (request, response, next) => {
+    const { email, password } = request.body;
+    // On cherche l'utilisateur dans la base de donnees
+    const user = await User.findOne({ email: email });
+    if (!user){
+        response.status(404).json({ message: "Utilisateur introuvable" });
+    } else {
+        // si l'utilisateur n'existe pas, on renvoie une erreur
 
-  // si l'utilisateur n'existe pas, on renvoie une erreur
+        // si l'utilisateur existe, on compare les mots de passe
+        const isPasswordValid = await bcrypt.compare(password, user.password);
+        if (isPasswordValid === true){
+            // si le mot de passe est invalide, on renvoie une erreur
 
-  // si l'utilisateur existe, on compare les mots de passe
-  const isPasswordValid = await bcrypt.compare(password, user.password);
-
-  // si le mot de passe est invalide, on renvoie une erreur
-
-  // sinon on genere un token
-  const token = jwt.sign(
-    { email: user.email, id: user._id },
-    process.env.JWT_SECRET,
-    { expiresIn: "1h" }
-  );
-  // on renvoie le token
-  res.status(200).json({ token });
+            // sinon on genere un token
+            const token = jwt.sign(
+            { email: user.email, id: user._id },
+            process.env.JWT_SECRET,
+            { expiresIn: "1h" }
+            );
+            // on renvoie le token
+            response.status(200).json({ token });
+        } else {
+            response.status(404).json({ message: "Mot de pass incorrect" });
+        }
+    }
 };
