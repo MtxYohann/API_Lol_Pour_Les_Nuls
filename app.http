@@ -1,0 +1,36 @@
+GET http://localhost:3001
+
+###
+GET http://localhost:3001/Champions/1
+
+###
+GET http://localhost:3001/Champions/
+
+###
+POST http://localhost:3001/Champions
+Content-Type : application/json
+
+{
+    "name": "Fizz",
+    "description": "un poisson avec des degats magiques",
+    "sorts_a": "dash",
+    "sorts_z": "buff auto attack",
+    "sorts_e": "dash",
+    "sorts_r": "lance un requin"
+}
+
+###
+PUT http://localhost:3001/Champions/2
+Content-Type: application/json
+
+{
+    "name": "ashe",
+    "description": "elle a un arc de glace et fait des dégats physiques",
+    "sorts_a": "buff auto attack",
+    "sorts_z": "un pigeon qui donne de la vision",
+    "sorts_e": "tire des fleches de glace en cone devant elle",
+    "sorts_r": "tire une grosse fleche de glace qui peut parcourir toute la carte"
+}
+
+###
+DELETE http://localhost:3001/Champions/1
