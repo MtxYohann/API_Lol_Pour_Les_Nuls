@@ -3,4 +3,3 @@
 /tools/doc/node_modules
 /tools/clang-format/node_modules
 .env
-.env.example
