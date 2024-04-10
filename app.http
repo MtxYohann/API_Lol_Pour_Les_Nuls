@@ -6,6 +6,11 @@ GET http://localhost:3000/Champions/6615034b0ba35e906a7945ba
 ###
 GET http://localhost:3000/Champions/
 
+
+###
+GET http://localhost:3000/error
+
+
 ###
 POST http://localhost:3000/Champions
 Content-Type : application/json
@@ -34,3 +39,25 @@ Content-Type: application/json
 
 ###
 DELETE http://localhost:3000/Champions/661515f20f533b72292c3d37
+
+### 
+
+POST http://localhost:3000/auth/signin
+Content-Type: application/json
+
+{
+    "email": "admin",
+    "password": "admin"
+}
+
+###
+
+POST http://localhost:3000/auth/signup
+Content-Type: application/json
+
+{
+    "email": "test",
+    "password": "admin",
+    "name": "admin",
+    "phoneNumber": "123456789"
+}

@@ -1,10 +1,11 @@
 import Champion from "../models/champion.js";
 import { validationResult } from "express-validator";
 
-export const getChampions = (req, res) => {
+export const getChampions = (request, response) => {
    Champion.find()
     .then((result) => {;
-      res.json(result);
+      response.status(201).json(result);
+      console.log(error)
     })
     .catch((error) => {
       console.log(error);
@@ -16,7 +17,7 @@ export const getChampion = (request, response) => {
   const id = request.params.id ;
   Champion.findById(id)
     .then((result) => {
-      response.json(result);
+      response.status(201).json(result);
     })
     .catch((error) => {
       console.log(error)
