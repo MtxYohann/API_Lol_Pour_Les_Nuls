@@ -24,13 +24,13 @@ export const getChampion = (request, response) => {
     });
 };
   
-export const createChampion = (request, response) => {
+export const createChampion = async (request, response) => {
   const bodyContent = request.body;
   const newChampion = new Champion(bodyContent);
   const errors = validationResult(request).array();
-  console.log(errors);
+  const champion = await Champion.findOne({ name: bodyContent.name });
 
-  if(errors === null) {
+  if(errors.length === 0 & newChampion === champion.name ) {
     newChampion
       .save()
       .then((result) => {

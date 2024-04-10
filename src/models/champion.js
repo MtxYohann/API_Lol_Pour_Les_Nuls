@@ -7,7 +7,7 @@ const championSchema = new Schema({
     sort_a: String,
     sort_z: String,
     sort_e: String,
-    sort_r: String
+    sort_r: String,
 });
 
 export default model("Champion", championSchema);

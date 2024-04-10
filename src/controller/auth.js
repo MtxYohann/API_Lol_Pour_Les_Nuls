@@ -2,9 +2,8 @@ import User from "../models/user.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
-export const signup = async (req, res, next) => {
-  const { email, password, name, phoneNumber } = req.body;
-  console.log(req.body);
+export const signup = async (request, response, next) => {
+  const { email, password, name, phoneNumber } = request.body;
   // On va hasher le mot de passe
   const hashedPassword = await bcrypt.hash(password, 12);
   // On cree un nouvel utilisateur
@@ -14,11 +13,18 @@ export const signup = async (req, res, next) => {
     name,
     phoneNumber,
   });
-  // On sauvegarde le nouvel utilisateur
-  const doc = await newUser.save();
-
-  // si tout s'est bien passé, on renvoie un status 201
-  res.status(201).json(doc);
+  const user = await User.findOne({ email: email });
+  try {
+    if (newUser.email === user.email){
+        return response.status(404).json({ message: "Cette Email est deja utilise" }); 
+    }           
+  } catch (error) {
+     // On sauvegarde le nouvel utilisateur
+     const doc = await newUser.save();
+    
+     // si tout s'est bien passé, on renvoie un status 201
+     response.status(201).json(doc);
+  }
 };
 
 export const signin = async (request, response, next) => {
