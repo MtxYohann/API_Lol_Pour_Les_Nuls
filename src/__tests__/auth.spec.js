@@ -1,12 +1,13 @@
 import "dotenv/config";
-import mongoose, { mongo } from "mongoose";
+import mongoose from "mongoose";
 import request from "supertest";
 const MONGO_STRING = process.env.MONGO_STRING;
-import { CreateApp } from "../app.js";
+import { CreateApp } from "../mock.app.mjs";
 import user from "../models/user.js";
 
 describe("creation d'un utilisateur et login", () => {
   let app;
+  let token = reponse.body;
 
   beforeAll(() => {
     mongoose
@@ -18,7 +19,7 @@ describe("creation d'un utilisateur et login", () => {
 
   it("Should create a new user", async () => {
     const response = await request(app).post("/auth/signup").send({
-      email: "caca@gmail.com",
+      email: "essai@gmail.com",
       password: "Te2t.1234",
       name: "test",
       phoneNumber: "123456789",
@@ -28,7 +29,7 @@ describe("creation d'un utilisateur et login", () => {
 
   it("Should login a user", async () => {
     const response = await request(app).post("/auth/signin").send({
-      email: "caca@gmail.com",
+      email: "essai@gmail.com",
       password: "Te2t.1234",
     });
     expect(response.statusCode).toBe(200);
@@ -36,17 +37,18 @@ describe("creation d'un utilisateur et login", () => {
     console.log(response.body)
   });
 
-  // it("Acces to all champions", async () => {
-  //   const response = await request(app).post("/Champions").send({
-  //     email: "caca@gmail.com",
-  //     password: "Te2t.1234",
-  //   });
-  //   expect(response.statusCode).toBe(200);
-  //   expect(response.body).toHaveProperty("token");
-  // });
+
+  it("Get champion", async () => {
+    const response = (await request(app).get("/Champions")).send({
+      token
+    });
+    expect(response.statusCode).toBe(201);
+  });
+
+
   afterAll(async () => {
     // delete the user created
-    await user.deleteOne({ email: "caca@gmail.com" });
+    await user.deleteOne({ email: "essai@gmail.com" });
     await mongoose.connection.close();
   });
 });
