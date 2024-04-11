@@ -5,19 +5,21 @@ const MONGO_STRING = process.env.MONGO_STRING;
 import { CreateApp } from "../mock.app.mjs";
 import user from "../models/user.js";
 
-describe("creation d'un utilisateur et login", () => {
-  let app;
-  let token = reponse.body;
 
+
+describe("creation d'un utilisateur et login", () => {
+let app;
+let token;
+let id;
   beforeAll(() => {
     mongoose
       .connect(MONGO_STRING)
-      .then(() => console.log("Connected to the database for Testing!"))
+      .then(() => console.log("Connecté à la database pour le test!"))
       .catch((err) => console.log(err));
     app = CreateApp();
   });
 
-  it("Should create a new user", async () => {
+  it("Création d'un nouvel utilisateur", async () => {
     const response = await request(app).post("/auth/signup").send({
       email: "essai@gmail.com",
       password: "Te2t.1234",
@@ -27,24 +29,39 @@ describe("creation d'un utilisateur et login", () => {
     expect(response.statusCode).toBe(201);
   });
 
-  it("Should login a user", async () => {
+  it("connect l'utilisateur", async () => {
     const response = await request(app).post("/auth/signin").send({
       email: "essai@gmail.com",
       password: "Te2t.1234",
     });
     expect(response.statusCode).toBe(200);
     expect(response.body).toHaveProperty("token");
-    console.log(response.body)
+    token = response.body.token
   });
-
-
-  it("Get champion", async () => {
-    const response = (await request(app).get("/Champions")).send({
-      token
-    });
+  
+  it("list tous les champions", async () => {
+    const response = await request(app)
+      .get("/Champions")
+      .set("Authorization", `Bearer ${token}`);
+      
     expect(response.statusCode).toBe(201);
   });
 
+  it("création d'un champion", async () => {
+    const response = await request(app)
+      .post("/Champions")
+      .set("Authorization", `Bearer ${token}`)
+      .send({
+        name: "Garen",
+        description: "Un chevalier avec une grosse epee ",
+        sort_a: "augmente la vitesse et augmente les dégats de la prochaine auto attaque ",
+        sort_z: "renforce c'est defense et gagne un petit bouclier",
+        sort_e: "tourne sur lui meme avec sa grosse epee",
+        sort_r: "plante une epee dans le sol et la fait aparaitre du ciel une tres grosse epee sur l'ennemie"
+      });
+    id = response.body._id
+    expect(response.statusCode).toBe(201);
+  });
 
   afterAll(async () => {
     // delete the user created
