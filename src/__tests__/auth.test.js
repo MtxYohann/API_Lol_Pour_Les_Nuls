@@ -33,6 +33,7 @@ describe("creation d'un utilisateur et login", () => {
     });
     expect(response.statusCode).toBe(200);
     expect(response.body).toHaveProperty("token");
+    console.log(response.body)
   });
 
   // it("Acces to all champions", async () => {

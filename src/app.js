@@ -1,11 +1,10 @@
-import express, { request, response } from "express";
+import express from "express";
 import { handleUncaughtErrors } from "./Middlewares/error.js";
 import routes from "./routes/index.js";
 import multer from "multer"
 import path from "path";
 import * as url from "url";
 const __dirname = url.fileURLToPath(new URL(".", import.meta.url));
-
 
 const fileStorage = multer.diskStorage({
     destination: (request, file, cd) => {

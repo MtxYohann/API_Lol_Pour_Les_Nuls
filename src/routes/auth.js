@@ -15,7 +15,7 @@ router.post("/signin", signin);
 router.post("/signup",
     [
         body('email').isEmail().withMessage("Email invalide."),
-        body('password').isStrongPassword().withMessage("Votre mot de passe n'est pas assait fort, il faut au moins 8 caracteres, une majuscule, une minuscule, un nombre, un symbol."),
+        body('password').isStrongPassword().withMessage("Votre mot de passe n'est pas assait fort, il faut au moins 8 caracteres, une majuscule, une minuscule, un nombre, un symbole."),
         body('name').trim().notEmpty(),
         body('phoneNumber').trim().notEmpty(),
     ],

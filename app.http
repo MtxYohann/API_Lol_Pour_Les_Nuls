@@ -25,12 +25,12 @@ Content-Type : application/json
 }
 
 ###
-PUT http://localhost:3000/Champions/661507761434037f7a59f0f3
+PUT http://localhost:3000/Champions/66166bdac70f9c0638e9a285
 Content-Type: application/json
 
 {
-    "name": "ashe",
-    "description": "elle a un arc de glace et fait des dégats physiques",
+    "name": "azerty",
+    "description": "elle a un arc de glace qui ralenti et fait des dégats physiques",
     "sort_a": "buff auto attack",
     "sort_z": "un pigeon qui donne de la vision",
     "sort_e": "tire des fleches de glace en cone devant elle",
@@ -46,8 +46,8 @@ POST http://localhost:3000/auth/signin
 Content-Type: application/json
 
 {
-    "email": "admin",
-    "password": "admin"
+    "email": "test@gmail.com",
+    "password": "Te2t.1234"
 }
 
 ###
@@ -56,8 +56,8 @@ POST http://localhost:3000/auth/signup
 Content-Type: application/json
 
 {
-    "email": "test",
-    "password": "admin",
+    "email": "test@gmail.com",
+    "password": "Te2t.1234",
     "name": "admin",
     "phoneNumber": "123456789"
 }
