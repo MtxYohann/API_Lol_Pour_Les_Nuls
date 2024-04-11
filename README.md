@@ -8,8 +8,9 @@ Pour exécuter ce projet localement vous devrez suivre ces étapes :
 
 1. Clonez le dépôt : `git clone https://github.com/MtxYohann/API_Lol_Pour_Les_Nuls.git`
 2. Installez les dépendances : `npm install express express-validator dotenv bcryptjs jsonwebtoken mongoose multer`
-3. Créer un fichier .env et mettre les valeurs du .env.example en les remplaçants par les votre
-4. Lancez le serveur : `npm start`
+3. Pour faire des tests Installez les dépendances : `npm install -D @babel/core @babel/node @babel/preset-env @types/jest jest supertest` 
+4. Créer un fichier .env et mettre les valeurs du .env.example en les remplaçants par les votre
+5. Lancez le serveur : `npm start`
 
 ## Fonctionnalités :
 
