@@ -21,11 +21,11 @@ router.get("/:id", getChampion);
 router.post("/",
   [
     body('name').trim().isLength({max:20, min:3}),
-    body('description').trim().isLength({maw:500, min:10}),
+    body('description').trim().isLength({max:500, min:10}),
     body('sort_a').trim().isLength({max:100, min:2}),
     body('sort_z').trim().isLength({max:100, min:2}),
     body('sort_e').trim().isLength({max:100, min:2}),
-    body('sort_r').trim().isLength({max:100, min:3}),
+    body('sort_r').trim().isLength({max:500, min:3}),
   ],
  createChampion
 );

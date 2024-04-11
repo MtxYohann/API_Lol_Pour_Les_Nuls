@@ -39,7 +39,7 @@ let id;
     token = response.body.token
   });
   
-  it("list tous les champions", async () => {
+  it("liste tous les champions", async () => {
     const response = await request(app)
       .get("/Champions")
       .set("Authorization", `Bearer ${token}`);
@@ -60,6 +60,40 @@ let id;
         sort_r: "plante une epee dans le sol et la fait aparaitre du ciel une tres grosse epee sur l'ennemie"
       });
     id = response.body._id
+    expect(response.statusCode).toBe(201);
+    console.log(id)
+  });
+
+  it("liste un champion choisi", async () => {
+    const response = await request(app)
+    .get("/Champions/",id)
+    .set("Authorization", `Bearer ${token}`)
+    console.log("/Champions/",id)
+    expect(response.statusCode).toBe(201);
+  });
+
+  it("modifie un champion choisi", async () => {
+    const response = await request(app)
+    .put(`/Champions/${id}`)
+    .set("Authorization", `Bearer ${token}`)
+    .send({
+      name: "Garen",
+      description: "Un chevalier avec une grosse epee qui crie DEMACIA ",
+      sort_a: "augmente la vitesse et augmente les dégats de la prochaine auto attaque ",
+      sort_z: "renforce c'est defense et gagne un petit bouclier",
+      sort_e: "tourne sur lui meme avec sa grosse epee",
+      sort_r: "plante une epee dans le sol et la fait aparaitre du ciel une tres grosse epee sur l'ennemie"
+    });
+    console.log(response.body)
+    expect(response.statusCode).toBe(201);
+    console.log(response.body)
+  })
+
+  it("Supprime un champion choisi", async () => {
+    const response = await request(app)
+    .delete(`/Champions/${id}`)
+    .set("Authorization", `Bearer ${token}`)
+    console.log(`/Champions/${id}`)
     expect(response.statusCode).toBe(201);
   });
 

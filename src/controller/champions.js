@@ -56,7 +56,7 @@ export const udpateChampion = (request, response) => {
 
   Champion.findByIdAndUpdate(id, bodyContent)
     .then((result) => {
-      response.json(result);
+      response.status(201).json(result);
     })
     .catch((error) => {
       console.log(error)
@@ -68,7 +68,7 @@ export const deleteChampion = (request, response) => {
   const id = request.params.id ;
   Champion.findByIdAndDelete(id)
     .then((result) => {
-      response.json(result);
+      response.status(201).json(result);
     })
     .catch((error) => {
       console.log(error)
