@@ -8,9 +8,9 @@ import user from "../models/user.js";
 
 
 describe("creation d'un utilisateur et login", () => {
-let app;
-let token;
-let id;
+  let app;
+  let token;
+  let id;
   beforeAll(() => {
     mongoose
       .connect(MONGO_STRING)
@@ -38,12 +38,12 @@ let id;
     expect(response.body).toHaveProperty("token");
     token = response.body.token
   });
-  
+
   it("liste tous les champions", async () => {
     const response = await request(app)
       .get("/Champions")
       .set("Authorization", `Bearer ${token}`);
-      
+
     expect(response.statusCode).toBe(201);
   });
 
@@ -66,33 +66,37 @@ let id;
 
   it("liste un champion choisi", async () => {
     const response = await request(app)
-    .get("/Champions/",id)
-    .set("Authorization", `Bearer ${token}`)
-    console.log("/Champions/",id)
+      .get("/Champions/", id)
+      .set("Authorization", `Bearer ${token}`)
+    console.log("/Champions/", id)
     expect(response.statusCode).toBe(201);
   });
 
   it("modifie un champion choisi", async () => {
     const response = await request(app)
-    .put(`/Champions/${id}`)
-    .set("Authorization", `Bearer ${token}`)
-    .send({
-      name: "Garen",
-      description: "Un chevalier avec une grosse epee qui crie DEMACIA ",
-      sort_a: "augmente la vitesse et augmente les dégats de la prochaine auto attaque ",
-      sort_z: "renforce c'est defense et gagne un petit bouclier",
-      sort_e: "tourne sur lui meme avec sa grosse epee",
-      sort_r: "plante une epee dans le sol et la fait aparaitre du ciel une tres grosse epee sur l'ennemie"
-    });
-    console.log(response.body)
+      .put(`/Champions/${id}`)
+      .set("Authorization", `Bearer ${token}`)
+      .send({
+        name: "Garen",
+        description: "Un chevalier avec une grosse epee qui crie DEMACIA ",
+        sort_a: "augmente la vitesse et augmente les dégats de la prochaine auto attaque ",
+        sort_z: "renforce c'est defense et gagne un petit bouclier",
+        sort_e: "tourne sur lui meme avec sa grosse epee",
+        sort_r: "plante une epee dans le sol et la fait aparaitre du ciel une tres grosse epee sur l'ennemie"
+      });
+    const check = await request(app)
+      .get(`/Champions/${id}`)
+      .set("Authorization", `Bearer ${token}`)
+      .send()
+    console.log(check.body)
+    //console.log(response)
     expect(response.statusCode).toBe(201);
-    console.log(response.body)
   })
 
   it("Supprime un champion choisi", async () => {
     const response = await request(app)
-    .delete(`/Champions/${id}`)
-    .set("Authorization", `Bearer ${token}`)
+      .delete(`/Champions/${id}`)
+      .set("Authorization", `Bearer ${token}`)
     console.log(`/Champions/${id}`)
     expect(response.statusCode).toBe(201);
   });
