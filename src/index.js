@@ -2,7 +2,6 @@ import "dotenv/config"
 import mongoose from 'mongoose';
 import { CreateApp } from "./app.mjs";
 
-
 const PORT = process.env.PORT || 3001;
 const MONGO_STRING = process.env.MONGO_STRING
 

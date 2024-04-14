@@ -4,6 +4,8 @@ import routes from "./routes/index.js";
 import multer from "multer"
 import path from "path";
 import * as url from "url";
+import swagger from "./swagger.js"
+
 const __dirname = url.fileURLToPath(new URL(".", import.meta.url));
 
 
@@ -30,7 +32,7 @@ const fileFilter = (req, file, cb) => {
 
 export function CreateApp() {
   const app = express();
-
+  swagger(app);
   app.use(express.json());
   
   //file upload middleware configuration
