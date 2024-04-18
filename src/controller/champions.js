@@ -34,6 +34,7 @@ export const createChampion = async (request, response) => {
   const newChampion = new Champion({ ...bodyContent });
   const errors = validationResult(request).array();
   const champion = await Champion.findOne({ name: bodyContent.name });
+  console.log(bodyContent);
   if(errors.length === 0 && champion === null) {
     newChampion
       .save()

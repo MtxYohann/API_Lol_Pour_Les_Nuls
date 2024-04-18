@@ -10,7 +10,7 @@ import user from "../models/user.js";
 describe("creation d'un utilisateur et login", () => {
   let app;
   let token;
-  let id;
+
   beforeAll(() => {
     mongoose
       .connect(MONGO_STRING)
@@ -47,6 +47,36 @@ describe("creation d'un utilisateur et login", () => {
     expect(response.statusCode).toBe(201);
   });
 
+  afterAll(async () => {
+    // delete the user created
+    await user.deleteOne({ email: "essai@gmail.com" });
+    await mongoose.connection.close();
+  });
+});
+
+describe("création d'un personnage modification check et supression du personnage",() => {
+  let app;
+  let token;
+  let id;
+
+  beforeAll(() => {
+    mongoose
+      .connect(MONGO_STRING)
+      .then(() => console.log("Connecté à la database pour le test!"))
+      .catch((err) => console.log(err));
+    app = CreateApp();
+  });
+
+  it("connect l'utilisateur", async () => {
+    const response = await request(app).post("/auth/signin").send({
+      email: "test@gmail.com",
+      password: "Te2t.1234",
+    });
+    expect(response.statusCode).toBe(200);
+    expect(response.body).toHaveProperty("token");
+    token = response.body.token
+  });
+
   it("création d'un champion", async () => {
     const response = await request(app)
       .post("/Champions")
@@ -64,13 +94,6 @@ describe("creation d'un utilisateur et login", () => {
     console.log(id)
   });
 
-  it("liste un champion choisi", async () => {
-    const response = await request(app)
-      .get("/Champions/", id)
-      .set("Authorization", `Bearer ${token}`)
-    console.log("/Champions/", id)
-    expect(response.statusCode).toBe(201);
-  });
 
   it("modifie un champion choisi", async () => {
     const response = await request(app)
@@ -93,6 +116,14 @@ describe("creation d'un utilisateur et login", () => {
     expect(response.statusCode).toBe(201);
   })
 
+  it("liste un champion choisi", async () => {
+    const response = await request(app)
+      .get("/Champions/", id)
+      .set("Authorization", `Bearer ${token}`)
+    console.log("/Champions/", id)
+    expect(response.statusCode).toBe(201);
+  });
+
   it("Supprime un champion choisi", async () => {
     const response = await request(app)
       .delete(`/Champions/${id}`)
@@ -101,9 +132,4 @@ describe("creation d'un utilisateur et login", () => {
     expect(response.statusCode).toBe(201);
   });
 
-  afterAll(async () => {
-    // delete the user created
-    await user.deleteOne({ email: "essai@gmail.com" });
-    await mongoose.connection.close();
-  });
 });
