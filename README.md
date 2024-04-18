@@ -7,7 +7,7 @@ Cette API va permettre d'avoir des informations vulgarisées sur les personnages
 Pour exécuter ce projet localement vous devrez suivre ces étapes :
 
 1. Clonez le dépôt : `git clone https://github.com/MtxYohann/API_Lol_Pour_Les_Nuls.git`
-2. Installez les dépendances : `npm install express express-validator dotenv bcryptjs jsonwebtoken mongoose multer`
+2. Installez les dépendances : `npm install express express-validator dotenv bcryptjs jsonwebtoken mongoose multer path`
 3. Pour faire des tests Installez les dépendances : `npm install -D @babel/core @babel/node @babel/preset-env @types/jest jest supertest` 
 4. Créer un fichier .env et mettre les valeurs du .env.example en les remplaçants par les votre
 5. Lancez le serveur : `npm start`
@@ -83,3 +83,12 @@ Avec la méthode `POST` et l'URL `http://localhost:3000/uploads/image` et le fic
 ![upload](/images/gitImg/upload.jpg)
 
 ### TEST
+
+Pour effectuer des tests de toute les fonctionnalités créer pour cette API REST on doit faire la commande `npm run test` directement dans le terminal.
+
+## Fonctionnalités à venir
+
+je n'ai pas réussi à implémenter swagger j'ai un conflit avec la collection de ma BDD champion `_id` que même avec plusieur tentative je n'ai pas réussi à résoudre dans les temps.
+
+pour le test de l'upload je n'ai pas réussi à upload la bonne image avec jest et supertest, il semble avoir un problème de chemin.
+Mais mon image est bien suprrimé apres avoir lancé le test.

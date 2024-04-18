@@ -4,8 +4,8 @@ import request from "supertest";
 const MONGO_STRING = process.env.MONGO_STRING;
 import { CreateApp } from "../mock.app.mjs";
 import user from "../models/user.js";
-
-
+import path from "path"
+import fs from "fs"
 
 describe("creation d'un utilisateur et login", () => {
   let app;
@@ -132,4 +132,55 @@ describe("création d'un personnage modification check et supression du personna
     expect(response.statusCode).toBe(201);
   });
 
+});
+
+describe.only("upload", () => {
+  let app;
+  let token;
+  let imageId;
+  const imagePath = path.join(__dirname,"/image_test/", "gragasKDA.jpg");
+
+  beforeAll(() => {
+    mongoose
+      .connect(MONGO_STRING)
+      .then(() => console.log("Connecté à la database pour le test!"))
+      .catch((err) => console.log(err));
+    app = CreateApp();
+    console.log(imagePath);
+    fs.writeFileSync(imagePath, "image data");
+  });
+
+  it("connect l'utilisateur", async () => {
+    const response = await request(app).post("/auth/signin").send({
+      email: "test@gmail.com",
+      password: "Te2t.1234",
+    });
+    expect(response.statusCode).toBe(200);
+    expect(response.body).toHaveProperty("token");
+    token = response.body.token
+  });
+
+  it("Télécharge une image", async () => {
+    const response = await request(app)
+      .post("/upload/image")
+      .set("Authorization", `Bearer ${token}`)
+      .attach("image", imagePath);
+      console.log(imagePath);
+    expect(response.statusCode).toBe(200);
+    expect(response.body).toHaveProperty("imageUrl");
+    imageId = response.body.imageUrl;
+    console.log(imageId); 
+  });
+
+  it("Supprime l'image téléchargée", async () => {
+    const response = await request(app)
+      .delete(`/images/${imageId}`);
+    expect(response.statusCode).toBe(200);
+  });
+
+  afterAll(async () => {
+    
+    fs.unlinkSync(imagePath); 
+    await mongoose.connection.close(); 
+  });
 });
