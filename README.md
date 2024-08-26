@@ -92,3 +92,5 @@ je n'ai pas réussi à implémenter swagger j'ai un conflit avec la collection d
 
 pour le test de l'upload je n'ai pas réussi à upload la bonne image avec jest et supertest, il semble avoir un problème de chemin.
 Mais mon image est bien suprrimé apres avoir lancé le test.
+
+TEST
